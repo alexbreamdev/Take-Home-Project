@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - Color constants are here
 enum Theme {
     static let background = Color("background")
     static let detailBackground = Color("detail-background")

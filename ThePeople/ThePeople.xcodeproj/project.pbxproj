@@ -16,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F10E2002A023EA1001DE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2F10E2012A0240C8001DE39A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2FF0796D29F97C7A0026AE24 /* ThePeople.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThePeople.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF0797029F97C7A0026AE24 /* ThePeopleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThePeopleApp.swift; sourceTree = "<group>"; };
 		2FF0797229F97C7A0026AE24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +38,106 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F10E1F32A023C25001DE39A /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2F10E1FE2A023DFA001DE39A /* Model */,
+				2F10E1FF2A023DFA001DE39A /* ViewModels */,
+				2F10E1FD2A023DFA001DE39A /* Views */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		2F10E1F42A023C2C001DE39A /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				2F10E1FC2A023DEB001DE39A /* Model */,
+				2F10E1FB2A023DEB001DE39A /* ViewModels */,
+				2F10E1FA2A023DEB001DE39A /* Views */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		2F10E1F52A023C33001DE39A /* People */ = {
+			isa = PBXGroup;
+			children = (
+				2F10E1F92A023C84001DE39A /* ViewModels */,
+				2F10E1F82A023C74001DE39A /* Model */,
+				2F10E1F72A023C62001DE39A /* Views */,
+			);
+			path = People;
+			sourceTree = "<group>";
+		};
+		2F10E1F62A023C3F001DE39A /* Settrings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settrings;
+			sourceTree = "<group>";
+		};
+		2F10E1F72A023C62001DE39A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2F10E1F82A023C74001DE39A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2F10E1F92A023C84001DE39A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2F10E1FA2A023DEB001DE39A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2F10E1FB2A023DEB001DE39A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2F10E1FC2A023DEB001DE39A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2F10E1FD2A023DFA001DE39A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2F10E1FE2A023DFA001DE39A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2F10E1FF2A023DFA001DE39A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		2FF0796429F97C7A0026AE24 = {
 			isa = PBXGroup;
 			children = (
@@ -55,11 +157,15 @@
 		2FF0796F29F97C7A0026AE24 /* ThePeople */ = {
 			isa = PBXGroup;
 			children = (
+				2F10E2002A023EA1001DE39A /* Info.plist */,
+				2FF0798429F9B06A0026AE24 /* Features */,
+				2FF0798329F9B0610026AE24 /* Base */,
 				2FF0797E29F9A1420026AE24 /* Resources */,
 				2FF0797029F97C7A0026AE24 /* ThePeopleApp.swift */,
 				2FF0797229F97C7A0026AE24 /* ContentView.swift */,
 				2FF0797429F97C7B0026AE24 /* Assets.xcassets */,
 				2FF0797629F97C7B0026AE24 /* Preview Content */,
+				2F10E2012A0240C8001DE39A /* README.md */,
 			);
 			path = ThePeople;
 			sourceTree = "<group>";
@@ -79,6 +185,24 @@
 				2FF0798129F9AC630026AE24 /* Theme.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		2FF0798329F9B0610026AE24 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		2FF0798429F9B06A0026AE24 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2F10E1F62A023C3F001DE39A /* Settrings */,
+				2F10E1F52A023C33001DE39A /* People */,
+				2F10E1F42A023C2C001DE39A /* Create */,
+				2F10E1F32A023C25001DE39A /* Detail */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,9 +410,9 @@
 				DEVELOPMENT_TEAM = MJ4M4XMHNY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ThePeople/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -315,9 +439,9 @@
 				DEVELOPMENT_TEAM = MJ4M4XMHNY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ThePeople/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
