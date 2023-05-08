@@ -20,3 +20,7 @@ If data doesn't exist in JSON, mark model property as optional
 
 ## Generics
 use generics to write reusable code. Warning: better works on refactroring
+
+## JSON Files
+use json files to model network requests before actually networking
+StaticJSONMapper -> read file from bundle

@@ -13,8 +13,8 @@
 		2F377E012A041C2700FA26B8 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F377E002A041C2700FA26B8 /* Models.swift */; };
 		2F377E042A041CCB00FA26B8 /* StaticJSONMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F377E032A041CCB00FA26B8 /* StaticJSONMapper.swift */; };
 		2F377E052A04246B00FA26B8 /* UsersStaticData.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F377DF82A0418AC00FA26B8 /* UsersStaticData.json */; };
+		2FE637D72A04C999007F276B /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE637D62A04C999007F276B /* PeopleView.swift */; };
 		2FF0797129F97C7A0026AE24 /* ThePeopleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0797029F97C7A0026AE24 /* ThePeopleApp.swift */; };
-		2FF0797329F97C7A0026AE24 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0797229F97C7A0026AE24 /* ContentView.swift */; };
 		2FF0797529F97C7B0026AE24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF0797429F97C7B0026AE24 /* Assets.xcassets */; };
 		2FF0797829F97C7B0026AE24 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF0797729F97C7B0026AE24 /* Preview Assets.xcassets */; };
 		2FF0798029F9A1B20026AE24 /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0797F29F9A1B20026AE24 /* Symbols.swift */; };
@@ -30,9 +30,9 @@
 		2F377DFD2A041B1700FA26B8 /* UsersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersResponse.swift; sourceTree = "<group>"; };
 		2F377E002A041C2700FA26B8 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		2F377E032A041CCB00FA26B8 /* StaticJSONMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticJSONMapper.swift; sourceTree = "<group>"; };
+		2FE637D62A04C999007F276B /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		2FF0796D29F97C7A0026AE24 /* ThePeople.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThePeople.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF0797029F97C7A0026AE24 /* ThePeopleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThePeopleApp.swift; sourceTree = "<group>"; };
-		2FF0797229F97C7A0026AE24 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2FF0797429F97C7B0026AE24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FF0797729F97C7B0026AE24 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FF0797F29F9A1B20026AE24 /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
@@ -90,6 +90,7 @@
 		2F10E1F72A023C62001DE39A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2FE637D62A04C999007F276B /* PeopleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,7 +202,6 @@
 				2FF0798329F9B0610026AE24 /* Base */,
 				2FF0797E29F9A1420026AE24 /* Resources */,
 				2FF0797029F97C7A0026AE24 /* ThePeopleApp.swift */,
-				2FF0797229F97C7A0026AE24 /* ContentView.swift */,
 				2FF0797429F97C7B0026AE24 /* Assets.xcassets */,
 				2FF0797629F97C7B0026AE24 /* Preview Content */,
 				2F10E2012A0240C8001DE39A /* README.md */,
@@ -321,8 +321,8 @@
 			files = (
 				2F377E042A041CCB00FA26B8 /* StaticJSONMapper.swift in Sources */,
 				2FF0798029F9A1B20026AE24 /* Symbols.swift in Sources */,
+				2FE637D72A04C999007F276B /* PeopleView.swift in Sources */,
 				2FF0798229F9AC630026AE24 /* Theme.swift in Sources */,
-				2FF0797329F97C7A0026AE24 /* ContentView.swift in Sources */,
 				2F377DFC2A041ABE00FA26B8 /* UserDetailResponse.swift in Sources */,
 				2FF0797129F97C7A0026AE24 /* ThePeopleApp.swift in Sources */,
 				2F377DFE2A041B1700FA26B8 /* UsersResponse.swift in Sources */,

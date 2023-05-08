@@ -11,7 +11,14 @@ import SwiftUI
 struct ThePeopleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // tabView is used to make a bottom bar with navigation buttons
+            TabView {
+                PeopleView()
+                    .tabItem {
+                        Symbols.person
+                        Text("Home")
+                    }
+            }
         }
     }
 }
