@@ -16,7 +16,10 @@ struct StaticJSONMapper {
               let data = FileManager.default.contents(atPath: path) else { throw MapperError.failedToGetContents }
         
         let decoder = JSONDecoder()
+        // key decoding from snake case without coding keys
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        // decode date from string value
+//        decoder.dateDecodingStrategy = .iso8601
         
         do {
             let result = try decoder.decode(type, from: data)
@@ -34,3 +37,4 @@ extension StaticJSONMapper {
         case failedToDecode
     }
 }
+
