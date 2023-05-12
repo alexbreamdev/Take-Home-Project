@@ -12,9 +12,15 @@ struct PersonItemView: View {
     
     var body: some View {
         VStack(spacing: .zero) {
-          Rectangle()
-                .fill(.blue)
-                .frame(height: 130)
+            AsyncImage(url: URL(string: user.avatar)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 130)
+                    .clipped()
+            } placeholder: {
+                Image("logo")
+            }
             
             VStack(alignment: .leading) {
                 PillView(id: user.id)

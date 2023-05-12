@@ -14,6 +14,8 @@ struct PeopleView: View {
         GridItem(.flexible())
     ]
     
+    @State private var users: [User] = []
+    
     var body: some View {
 
         NavigationStack {
@@ -23,12 +25,17 @@ struct PeopleView: View {
                 // to make scrollable embed in ScrollView
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(1..<10, id: \.self) { item in
-                           PersonItemView(user: User(id: 1, email: "email", firstName: "Alex", lastName: "Bream", avatar: ""))
+                        ForEach(users) { user in
+                            NavigationLink(value: user) {
+                                PersonItemView(user: user)
+                            }
                         }
                     }
                     .padding()
                 }
+            }
+            .navigationDestination(for: User.self) { user in
+                Text("\(user.lastName)")
             }
             .navigationTitle("People")
             .toolbar {
@@ -36,7 +43,13 @@ struct PeopleView: View {
                    create
                 }
             }
-            
+            .onAppear {
+                do {
+                    users = try StaticJSONMapper.decode(file: "UsersStaticData", type: UsersResponse.self).data
+                } catch {
+                    print("Can't load users")
+                }
+            }
         }
     }
 }
