@@ -35,7 +35,7 @@ struct PeopleView: View {
                 }
             }
             .navigationDestination(for: User.self) { user in
-                Text("\(user.lastName)")
+                DetailView()
             }
             .navigationTitle("People")
             .toolbar {

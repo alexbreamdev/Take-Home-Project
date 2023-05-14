@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct DetailView: View {
+    @State private var userInfo: UserDetailResponse?
     var body: some View {
         ZStack {
             background
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
+                    avatar
                     
                     Group {
                         general
@@ -25,12 +27,18 @@ struct DetailView: View {
                 .padding()
             }
         }
+        .navigationTitle("Details")
+        .onAppear {
+            userInfo = try? StaticJSONMapper.decode(file: "SingleUserData", type: UserDetailResponse.self)
+        }
     }
 }
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView()
+        NavigationStack {
+            DetailView()
+        }
     }
 }
 
@@ -42,9 +50,26 @@ private extension DetailView {
 
 private extension DetailView {
     
+    @ViewBuilder
+    var avatar: some View {
+        if let avatarAbsString = userInfo?.data.avatar,
+           let avatarURL = URL(string: avatarAbsString) {
+            AsyncImage(url: avatarURL) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 250)
+                    .clipped()
+            } placeholder: {
+                ProgressView()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
+    }
+    
     var general: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PillView(id: 0)
+            PillView(id: userInfo?.data.id ?? 0)
             Group {
                 firstName
                 lastName
@@ -54,22 +79,31 @@ private extension DetailView {
         }
     }
     
+    @ViewBuilder
     var link: some View {
-        Link(destination: URL(string: "https://reqres.in/#support-heading")!) {
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Support Reqres")
-                    .foregroundColor(Theme.text)
-                    .font(.system(.body, design: .rounded))
-                    .fontWeight(.semibold)
+        if let supportAbsString = userInfo?.support.url,
+           let supportURL = URL(string: supportAbsString),
+           let supportText = userInfo?.support.text {
+            Link(destination: supportURL) {
                 
-                Text("https://reqres.in/#support-heading")
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(supportText)
+                        .foregroundColor(Theme.text)
+                        .font(.system(.body, design: .rounded))
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
+                    
+                    Text(supportAbsString)
+                }
+                
+                Spacer()
+                
+                Symbols.link
+                    .font(.system(.title3, design: .rounded))
             }
-            
-            Spacer()
-            
-            Symbols.link
-                .font(.system(.title3, design: .rounded))
+        }
+        else {
+            EmptyView()
         }
     }
     
@@ -79,7 +113,7 @@ private extension DetailView {
             .font(.system(.body, design: .rounded))
             .fontWeight(.semibold)
         
-        Text("First Name Here")
+        Text(userInfo?.data.firstName ?? "-")
             .font(.system(.subheadline, design: .rounded))
         Divider()
     }
@@ -90,7 +124,7 @@ private extension DetailView {
             .font(.system(.body, design: .rounded))
             .fontWeight(.semibold)
         
-        Text("First Name Here")
+        Text(userInfo?.data.lastName ?? "-")
             .font(.system(.subheadline, design: .rounded))
         Divider()
     }
@@ -101,7 +135,7 @@ private extension DetailView {
             .font(.system(.body, design: .rounded))
             .fontWeight(.semibold)
         
-        Text("First Name Here")
+        Text(userInfo?.data.email ?? "-")
             .font(.system(.subheadline, design: .rounded))
         Divider()
     }
