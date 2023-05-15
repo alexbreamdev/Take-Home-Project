@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PeopleView: View {
+    @State private var showCreateView: Bool = false
     // make columns for lazyVgrid
     let columns = [
         GridItem(.flexible()),
@@ -50,6 +51,9 @@ struct PeopleView: View {
                     print("Can't load users")
                 }
             }
+            .sheet(isPresented: $showCreateView) {
+                  CreateView()
+            }
         }
     }
 }
@@ -68,7 +72,7 @@ extension PeopleView {
     
     var create: some View {
         Button {
-            
+            showCreateView.toggle()
         } label: {
             Symbols.plus
                 .font(.system(.headline, design: .rounded))
