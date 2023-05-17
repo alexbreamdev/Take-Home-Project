@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CreateView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var createViewModel = CreateViewModel()
     var body: some View {
         NavigationStack {
             Form {
@@ -21,6 +22,11 @@ struct CreateView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                   done
+                }
+            }
+            .onChange(of: createViewModel.state) { formState in
+                if formState == .successful {
+                    dismiss()
                 }
             }
         }
@@ -47,21 +53,21 @@ private extension CreateView {
     }
     
     var firstName: some View {
-        TextField("First Name", text: .constant(""))
+        TextField("First Name", text: $createViewModel.person.firstName)
     }
     
     var lastName: some View {
-        TextField("Last Name", text: .constant(""))
+        TextField("Last Name", text:  $createViewModel.person.lastName)
     }
     
     var job: some View {
-        TextField("Job", text: .constant(""))
+        TextField("Job", text:  $createViewModel.person.job)
     }
     
     var submit: some View {
         Section {
             Button {
-                
+                createViewModel.create()
             } label: {
                 Text("Submit")
             }
