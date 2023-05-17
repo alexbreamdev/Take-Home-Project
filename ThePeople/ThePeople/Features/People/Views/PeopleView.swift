@@ -45,10 +45,14 @@ struct PeopleView: View {
                 }
             }
             .onAppear {
-                do {
-                    users = try StaticJSONMapper.decode(file: "UsersStaticData", type: UsersResponse.self).data
-                } catch {
-                    print("Can't load users")
+                
+                NetworkingManager.shared.request("https://reqres.in/api/users", type: UsersResponse.self) { result in
+                    switch result {
+                    case .success(let response):
+                        self.users = response.data
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
             }
             .sheet(isPresented: $showCreateView) {
