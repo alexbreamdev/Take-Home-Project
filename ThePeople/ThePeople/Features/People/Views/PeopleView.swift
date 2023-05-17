@@ -9,13 +9,12 @@ import SwiftUI
 
 struct PeopleView: View {
     @State private var showCreateView: Bool = false
+    @StateObject private var peopleVM = PeopleViewModel()
     // make columns for lazyVgrid
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
-    @State private var users: [User] = []
     
     var body: some View {
 
@@ -26,7 +25,7 @@ struct PeopleView: View {
                 // to make scrollable embed in ScrollView
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(users) { user in
+                        ForEach(peopleVM.users) { user in
                             NavigationLink(value: user) {
                                 PersonItemView(user: user)
                             }
@@ -36,7 +35,7 @@ struct PeopleView: View {
                 }
             }
             .navigationDestination(for: User.self) { user in
-                DetailView()
+                DetailView(userId: user.id)
             }
             .navigationTitle("People")
             .toolbar {
@@ -45,15 +44,8 @@ struct PeopleView: View {
                 }
             }
             .onAppear {
-                
-                NetworkingManager.shared.request("https://reqres.in/api/users", type: UsersResponse.self) { result in
-                    switch result {
-                    case .success(let response):
-                        self.users = response.data
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
+                peopleVM.fetchUsers()
+               
             }
             .sheet(isPresented: $showCreateView) {
                   CreateView()

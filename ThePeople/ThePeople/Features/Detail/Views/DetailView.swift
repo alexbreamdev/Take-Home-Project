@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct DetailView: View {
-    @State private var userInfo: UserDetailResponse?
+    let userId: Int
+    @ObservedObject var detailViewModel = DetailViewModel()
     var body: some View {
         ZStack {
             background
@@ -29,7 +30,7 @@ struct DetailView: View {
         }
         .navigationTitle("Details")
         .onAppear {
-            userInfo = try? StaticJSONMapper.decode(file: "SingleUserData", type: UserDetailResponse.self)
+            detailViewModel.fetchDetails(for: userId)
         }
     }
 }
@@ -37,7 +38,7 @@ struct DetailView: View {
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            DetailView()
+            DetailView(userId: 1)
         }
     }
 }
@@ -52,7 +53,7 @@ private extension DetailView {
     
     @ViewBuilder
     var avatar: some View {
-        if let avatarAbsString = userInfo?.data.avatar,
+        if let avatarAbsString = detailViewModel.user?.avatar,
            let avatarURL = URL(string: avatarAbsString) {
             AsyncImage(url: avatarURL) { image in
                 image
@@ -69,7 +70,7 @@ private extension DetailView {
     
     var general: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PillView(id: userInfo?.data.id ?? 0)
+            PillView(id: detailViewModel.user?.id ?? 0)
             Group {
                 firstName
                 lastName
@@ -81,9 +82,9 @@ private extension DetailView {
     
     @ViewBuilder
     var link: some View {
-        if let supportAbsString = userInfo?.support.url,
+        if let supportAbsString = detailViewModel.support?.url,
            let supportURL = URL(string: supportAbsString),
-           let supportText = userInfo?.support.text {
+           let supportText = detailViewModel.support?.text {
             Link(destination: supportURL) {
                 
                 VStack(alignment: .leading, spacing: 8) {
@@ -113,7 +114,7 @@ private extension DetailView {
             .font(.system(.body, design: .rounded))
             .fontWeight(.semibold)
         
-        Text(userInfo?.data.firstName ?? "-")
+        Text(detailViewModel.user?.firstName ?? "-")
             .font(.system(.subheadline, design: .rounded))
         Divider()
     }
@@ -124,7 +125,7 @@ private extension DetailView {
             .font(.system(.body, design: .rounded))
             .fontWeight(.semibold)
         
-        Text(userInfo?.data.lastName ?? "-")
+        Text(detailViewModel.user?.lastName ?? "-")
             .font(.system(.subheadline, design: .rounded))
         Divider()
     }
@@ -135,7 +136,7 @@ private extension DetailView {
             .font(.system(.body, design: .rounded))
             .fontWeight(.semibold)
         
-        Text(userInfo?.data.email ?? "-")
+        Text(detailViewModel.user?.email ?? "-")
             .font(.system(.subheadline, design: .rounded))
         Divider()
     }
