@@ -50,6 +50,13 @@ struct PeopleView: View {
             .sheet(isPresented: $showCreateView) {
                   CreateView()
             }
+            .alert(isPresented: $peopleVM.hasError, error: peopleVM.error) {
+                Button {
+                    peopleVM.fetchUsers()
+                } label: {
+                    Text("Retry")
+                }
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ struct DetailView: View {
             }
         }
         .navigationTitle("Details")
+        .alert(isPresented: $detailViewModel.hasError, error: detailViewModel.error){}
         .onAppear {
             detailViewModel.fetchDetails(for: userId)
         }

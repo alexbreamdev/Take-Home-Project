@@ -11,6 +11,8 @@ import Foundation
 final class CreateViewModel: ObservableObject {
     @Published var person = NewPerson()
     @Published private(set) var state: SubmissionState?
+    @Published private(set) var error: NetworkingManager.NetworkingError?
+    @Published var hasError = false
     
     func create() {
         // encode object to data to sent with networking manager
@@ -23,8 +25,10 @@ final class CreateViewModel: ObservableObject {
                 switch result {
                 case .success:
                     self?.state = .successful
-                case .failure(let err):
+                case .failure(let error):
                     self?.state = .unsuccessful
+                    self?.hasError = true
+                    self?.error = error as? NetworkingManager.NetworkingError
                 }
             }
         })

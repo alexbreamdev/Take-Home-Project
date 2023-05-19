@@ -96,12 +96,29 @@ class NetworkingManager {
 }
 
 extension NetworkingManager {
-    enum NetworkingError: Error {
+    enum NetworkingError: LocalizedError {
         case invalidURL
         case custom(error: Error)
         case invalidStatusCode(statusCode: Int)
         case invalidData
         case failedToDecode(error: Error)
+    }
+}
+
+extension NetworkingManager.NetworkingError {
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "URL isn't valid"
+        case .custom(let error):
+            return "Something wrong. \(error)"
+        case .invalidStatusCode(let statusCode):
+            return "Status code: \(statusCode). Wrong response."
+        case .invalidData:
+            return "Wrong data response."
+        case .failedToDecode(let error):
+        return "Can't decoded data. \(error)"
+        }
     }
 }
 
