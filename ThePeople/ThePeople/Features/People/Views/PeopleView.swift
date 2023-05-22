@@ -22,16 +22,20 @@ struct PeopleView: View {
             ZStack {
                 background
                 
-                // to make scrollable embed in ScrollView
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(peopleVM.users) { user in
-                            NavigationLink(value: user) {
-                                PersonItemView(user: user)
+                if peopleVM.isLoading {
+                    ProgressView()
+                } else {
+                    // to make scrollable embed in ScrollView
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(peopleVM.users) { user in
+                                NavigationLink(value: user) {
+                                    PersonItemView(user: user)
+                                }
                             }
                         }
+                        .padding()
                     }
-                    .padding()
                 }
             }
             .navigationDestination(for: User.self) { user in
@@ -41,6 +45,7 @@ struct PeopleView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                    create
+                        .disabled(peopleVM.isLoading)
                 }
             }
             .onAppear {

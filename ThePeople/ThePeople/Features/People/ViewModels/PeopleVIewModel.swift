@@ -11,16 +11,24 @@ import Foundation
 final class PeopleViewModel: ObservableObject {
     @Published private(set) var users: [User] = []
     @Published private(set) var error: NetworkingManager.NetworkingError?
+    @Published private(set) var isLoading: Bool = false
     @Published var hasError = false
     
     func fetchUsers() {
-        NetworkingManager.shared.request("https://reqres.in/api/users", type: UsersResponse.self) {[weak self] result in
+        isLoading = true
+        NetworkingManager.shared.request("https://reqres.in/api/users?delay=3", type: UsersResponse.self) {[weak self] result in
+            // returned last in the block
+            defer {
+                self?.isLoading = false
+            }
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
                     self?.users = response.data
+           
                 }
             case .failure(let error):
+                
                 self?.hasError = true
                 self?.error = error as? NetworkingManager.NetworkingError
             }
