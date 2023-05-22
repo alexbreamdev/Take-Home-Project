@@ -30,6 +30,12 @@ struct CreateView: View {
                 }
             }
             .alert(isPresented: $createViewModel.hasError, error: createViewModel.error) {}
+            .overlay {
+                if createViewModel.state == .submitting {
+                    ProgressView()
+                }
+            }
+            .disabled(createViewModel.state == .submitting)
 
         }
     }
