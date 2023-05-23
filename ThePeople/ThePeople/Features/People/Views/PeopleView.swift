@@ -10,6 +10,7 @@ import SwiftUI
 struct PeopleView: View {
     @State private var showCreateView: Bool = false
     @StateObject private var peopleVM = PeopleViewModel()
+    @State private var shouldShowSuccess: Bool = false
     // make columns for lazyVgrid
     let columns = [
         GridItem(.flexible()),
@@ -53,13 +54,30 @@ struct PeopleView: View {
                
             }
             .sheet(isPresented: $showCreateView) {
-                  CreateView()
+                CreateView {
+                    withAnimation(.spring().delay(0.25)) {
+                        self.shouldShowSuccess.toggle()
+                    }
+                }
             }
             .alert(isPresented: $peopleVM.hasError, error: peopleVM.error) {
                 Button {
                     peopleVM.fetchUsers()
                 } label: {
                     Text("Retry")
+                }
+            }
+            .overlay {
+                if shouldShowSuccess {
+                    CheckmarkPopoverView()
+                        .transition(.scale.combined(with: .opacity))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation(.spring()) {
+                                    self.shouldShowSuccess.toggle()
+                                }
+                            }
+                        }
                 }
             }
         }

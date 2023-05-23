@@ -22,7 +22,7 @@ class NetworkingManager {
             return
         }
         // create url request
-        var request = buildRequest(from: url, methodType: methodType)
+        let request = buildRequest(from: url, methodType: methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, resp, error in
             // check if there is an error
@@ -69,7 +69,7 @@ class NetworkingManager {
             return
         }
         // create url request
-        var request = buildRequest(from: url, methodType: methodType)
+        let request = buildRequest(from: url, methodType: methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, resp, error in
             // check if there is an error
