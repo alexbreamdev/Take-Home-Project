@@ -18,6 +18,12 @@ struct ThePeopleApp: App {
                         Symbols.person
                         Text("Home")
                     }
+                
+                SettingsView()
+                    .tabItem {
+                        Symbols.gear
+                        Text("Settings")
+                    }
             }
         }
     }
