@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// MARK: - Struct to create and send person data with POST request
 struct NewPerson: Codable {
     var firstName: String = ""
     var lastName: String = ""
