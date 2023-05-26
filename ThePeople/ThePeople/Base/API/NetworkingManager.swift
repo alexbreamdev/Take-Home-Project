@@ -14,15 +14,15 @@ class NetworkingManager {
     private init() {}
     
     // MARK: - Request with closure
-    func request<T: Codable>(methodType: MethodType = .GET, _ absoluteURL: String, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Codable>(_ endpoint: Endpoint, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         // create url from string
-        guard let url = URL(string: absoluteURL) else {
+        guard let url = endpoint.url else {
             // use Result completion handler to consume error
             completion(.failure(NetworkingError.invalidURL))
             return
         }
         // create url request
-        let request = buildRequest(from: url, methodType: methodType)
+        let request = buildRequest(from: url, methodType: endpoint.methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, resp, error in
             // check if there is an error
@@ -61,15 +61,15 @@ class NetworkingManager {
     }
     
     // MARK: -
-    func request(methodType: MethodType = .GET, _ absoluteURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func request(_ endpoint: Endpoint, completion: @escaping (Result<Void, Error>) -> Void) {
         // create url from string
-        guard let url = URL(string: absoluteURL) else {
+        guard let url = endpoint.url else {
             // use Result completion handler to consume error
             completion(.failure(NetworkingError.invalidURL))
             return
         }
         // create url request
-        let request = buildRequest(from: url, methodType: methodType)
+        let request = buildRequest(from: url, methodType: endpoint.methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, resp, error in
             // check if there is an error
@@ -122,16 +122,9 @@ extension NetworkingManager.NetworkingError {
     }
 }
 
-extension NetworkingManager {
-    enum MethodType {
-        case GET
-        // send data with post method
-        case POST(data: Data?)
-    }
-}
 
 private extension NetworkingManager {
-    func buildRequest(from url: URL, methodType: MethodType) -> URLRequest {
+    func buildRequest(from url: URL, methodType: Endpoint.MethodType) -> URLRequest {
         // create url request
         var request = URLRequest(url: url)
         
