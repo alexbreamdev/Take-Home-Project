@@ -49,9 +49,8 @@ struct PeopleView: View {
                         .disabled(peopleVM.isLoading)
                 }
             }
-            .onAppear {
-                peopleVM.fetchUsers()
-               
+            .task {
+                await peopleVM.fetchUsers()
             }
             .sheet(isPresented: $showCreateView) {
                 CreateView {
@@ -63,7 +62,9 @@ struct PeopleView: View {
             }
             .alert(isPresented: $peopleVM.hasError, error: peopleVM.error) {
                 Button {
-                    peopleVM.fetchUsers()
+                    Task {
+                        await peopleVM.fetchUsers()
+                    }
                 } label: {
                     Text("Retry")
                 }

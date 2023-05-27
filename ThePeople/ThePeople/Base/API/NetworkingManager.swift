@@ -13,85 +13,61 @@ class NetworkingManager {
     
     private init() {}
     
-    // MARK: - Request with closure
-    func request<T: Codable>(_ endpoint: Endpoint, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    // MARK: - Request async/avait
+    func request<T: Codable>(_ endpoint: Endpoint, type: T.Type) async throws -> T {
         // create url from string
         guard let url = endpoint.url else {
-            // use Result completion handler to consume error
-            completion(.failure(NetworkingError.invalidURL))
-            return
+            // throw error if url returns nill
+            throw NetworkingError.invalidURL
         }
         // create url request
         let request = buildRequest(from: url, methodType: endpoint.methodType)
         
-        let dataTask = URLSession.shared.dataTask(with: request) { data, resp, error in
-            // check if there is an error
-            if error != nil {
-                completion(.failure(NetworkingError.custom(error: error!)))
-                return
-            }
-            
-            // check if resp status code is correct
-            guard let response = resp as? HTTPURLResponse,
-                  (200...300).contains(response.statusCode)
-            else {
-                let statusCode = (resp as! HTTPURLResponse).statusCode
-                completion(.failure(NetworkingError.invalidStatusCode(statusCode: statusCode)))
-                return }
-            
-            // check if there is data object
-            guard let data = data else {
-                completion(.failure(NetworkingError.invalidData))
-                return }
-            
-            // decode data object
-            let decoder = JSONDecoder()
-            do {
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .iso8601
-                let res = try decoder.decode(T.self, from: data)
-                completion(.success(res))
-            } catch {
-                completion(.failure(NetworkingError.failedToDecode(error: error)))
-            }
+        // async request to API returns data and response
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        // check if resp status code is correct
+        guard let response = response as? HTTPURLResponse,
+              (200...300).contains(response.statusCode)
+        else {
+            // get status failed code
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            // pass status code with error enum
+            throw NetworkingError.invalidStatusCode(statusCode: statusCode)
         }
         
-        // don't forget resume data task
-        dataTask.resume()
+        // decode data object
+        let decoder = JSONDecoder()
+
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+        let res = try decoder.decode(T.self, from: data)
+        return res
+      
     }
     
-    // MARK: -
-    func request(_ endpoint: Endpoint, completion: @escaping (Result<Void, Error>) -> Void) {
+    // MARK: - check response status code and other errors
+    func request(_ endpoint: Endpoint) async throws {
         // create url from string
         guard let url = endpoint.url else {
-            // use Result completion handler to consume error
-            completion(.failure(NetworkingError.invalidURL))
-            return
+            // throw error if url returns nill
+            throw NetworkingError.invalidURL
         }
         // create url request
         let request = buildRequest(from: url, methodType: endpoint.methodType)
         
-        let dataTask = URLSession.shared.dataTask(with: request) { data, resp, error in
-            // check if there is an error
-            if error != nil {
-                completion(.failure(NetworkingError.custom(error: error!)))
-                return
-            }
-            
-            // check if resp status code is correct
-            guard let response = resp as? HTTPURLResponse,
-                  (200...300).contains(response.statusCode)
-            else {
-                let statusCode = (resp as! HTTPURLResponse).statusCode
-                completion(.failure(NetworkingError.invalidStatusCode(statusCode: statusCode)))
-                return
-            }
-            
-            completion(.success(()))
-        }
+        // async request to API returns data and response
+        let (_, response) = try await URLSession.shared.data(for: request)
         
-        // don't forget resume data task
-        dataTask.resume()
+        // check if resp status code is correct
+        guard let response = response as? HTTPURLResponse,
+              (200...300).contains(response.statusCode)
+        else {
+            // get status failed code
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            // pass status code with error enum
+            throw NetworkingError.invalidStatusCode(statusCode: statusCode)
+        }
     }
 }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class DetailViewModel: ObservableObject {
     @Published private(set) var user: User?
     @Published private(set) var support: Support?
@@ -14,21 +15,25 @@ final class DetailViewModel: ObservableObject {
     @Published private(set) var isLoading: Bool = false
     @Published var hasError = false
     
-    func fetchDetails(for userId: Int) {
+    func fetchDetails(for userId: Int) async {
+        // set status is loading
         isLoading = true
-        NetworkingManager.shared.request(Endpoint.detail(id: userId), type: UserDetailResponse.self) {[weak self] result in
-            DispatchQueue.main.async {
-                defer {
-                    self?.isLoading = false
-                }
-                switch result {
-                case .success(let response):
-                    self?.user = response.data
-                    self?.support = response.support
-                case .failure(let error):
-                    self?.hasError = true
-                    self?.error = error as? NetworkingManager.NetworkingError
-                }
+        // reset isLoading status when everything is executed
+        defer {
+            isLoading = false
+        }
+        
+        do {
+            // request using endpoint and user
+            let userResponse = try await NetworkingManager.shared.request(Endpoint.detail(id: userId), type: UserDetailResponse.self)
+            self.user = userResponse.data
+            self.support = userResponse.support
+        } catch {
+            self.hasError = true
+            if let networkingError = error as? NetworkingManager.NetworkingError {
+                self.error = networkingError
+            } else {
+                self.error = .custom(error: error)
             }
         }
     }

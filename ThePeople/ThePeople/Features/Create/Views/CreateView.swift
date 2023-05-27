@@ -107,7 +107,9 @@ private extension CreateView {
         Section {
             Button {
                 focusField = nil
-                createViewModel.create()
+                Task {
+                    await createViewModel.create()
+                }
             } label: {
                 Text("Submit")
             }

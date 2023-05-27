@@ -34,8 +34,8 @@ struct DetailView: View {
         }
         .navigationTitle("Details")
         .alert(isPresented: $detailViewModel.hasError, error: detailViewModel.error){}
-        .onAppear {
-            detailViewModel.fetchDetails(for: userId)
+        .task {
+            await detailViewModel.fetchDetails(for: userId)
         }
     }
 }
