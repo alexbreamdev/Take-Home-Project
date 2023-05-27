@@ -34,10 +34,20 @@ struct PeopleView: View {
                             ForEach(peopleVM.users) { user in
                                 NavigationLink(value: user) {
                                     PersonItemView(user: user)
+                                        .task {
+                                            if peopleVM.hasReachedEnd(of: user) && !peopleVM.isFetching {
+                                                await peopleVM.fetchNextSetOfUsers()
+                                            }
+                                        }
                                 }
                             }
                         }
                         .padding()
+                    }
+                    .overlay(alignment: .bottom) {
+                        if peopleVM.isFetching {
+                            ProgressView()
+                        }
                     }
                 }
             }

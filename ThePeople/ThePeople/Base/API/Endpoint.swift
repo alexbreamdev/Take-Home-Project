@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: - Way to interact with API endpoints, using enum, query
 enum Endpoint {
-    // to PeopleView
-    case people
+    // to PeopleView // page is using query parameter to make pagination
+    case people(page: Int)
     
     // to DetailView
     case detail(id: Int)
@@ -56,6 +56,17 @@ extension Endpoint {
             return .POST(data: data)
         }
     }
+    
+    
+    // query items
+    var queryItems: [String: String]? {
+        switch self {
+        case .people(let page):
+            return ["page": "\(page)"]
+        default:
+            return nil
+        }
+    }
 }
 
 // MARK: - URL creation
@@ -71,13 +82,15 @@ extension Endpoint {
         // adding path to components (people, detail(id: Int, create)
         urlComponents.path = path
         
+        
+        var requestQueryItems = queryItems?.compactMap { item in
+            URLQueryItem(name: item.key, value: item.value)
+        }
         #if DEBUG
         // query parameters (items) such as delay=3, pages
-        urlComponents.queryItems = [
-            URLQueryItem(name: "delay", value: "3")
-        ]
+        requestQueryItems?.append(URLQueryItem(name: "delay", value: "1"))
         #endif
-        
+        urlComponents.queryItems = requestQueryItems
         return urlComponents.url
     }
 }
