@@ -11,6 +11,8 @@ struct PeopleView: View {
     @State private var showCreateView: Bool = false
     @StateObject private var peopleVM = PeopleViewModel()
     @State private var shouldShowSuccess: Bool = false
+    @State private var hasAppeared: Bool = false
+    
     // make columns for lazyVgrid
     let columns = [
         GridItem(.flexible()),
@@ -39,6 +41,11 @@ struct PeopleView: View {
                     }
                 }
             }
+            .refreshable {
+                Task {
+                    await peopleVM.fetchUsers()
+                }
+            }
             .navigationDestination(for: User.self) { user in
                 DetailView(userId: user.id)
             }
@@ -48,9 +55,18 @@ struct PeopleView: View {
                    create
                         .disabled(peopleVM.isLoading)
                 }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    refresh
+                        .disabled(peopleVM.isLoading)
+                }
             }
             .task {
-                await peopleVM.fetchUsers()
+                // fetch one time
+                if hasAppeared == false {
+                    await peopleVM.fetchUsers()
+                    hasAppeared = true
+                }
             }
             .sheet(isPresented: $showCreateView) {
                 CreateView {
@@ -82,6 +98,7 @@ struct PeopleView: View {
                         }
                 }
             }
+            
         }
     }
 }
@@ -96,6 +113,18 @@ struct PeopleView_Previews: PreviewProvider {
 extension PeopleView {
     var background: some View {
         Theme.background.edgesIgnoringSafeArea([.top])
+    }
+    
+    var refresh: some View {
+        Button {
+            Task {
+                await peopleVM.fetchUsers()
+            }
+        } label: {
+            Symbols.refresh
+                .font(.system(.headline, design: .rounded))
+                .fontWeight(.bold)
+        }
     }
     
     var create: some View {
